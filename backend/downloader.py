@@ -6,7 +6,7 @@ from spotify_manager import SpotifyManager
 
 class Downloader:
     def __init__(self):
-        self.download_path = os.path.join(os.path.dirname(__file__), "..", "downloads")
+        self.download_path = "/tmp"
         if not os.path.exists(self.download_path):
             os.makedirs(self.download_path)
         self.sp_manager = SpotifyManager()
@@ -21,6 +21,7 @@ class Downloader:
             'quiet': True,
             'no_warnings': True,
             'noplaylist': False,
+            'cachedir': False,  # Desativa cache para evitar erros em sistemas somente-leitura
         }
 
     def get_info(self, url):
@@ -123,7 +124,14 @@ class Downloader:
                 filename = ydl.prepare_filename(info)
                 # O yt-dlp substitui a extensão por .mp3 no postprocessor
                 filename = os.path.splitext(filename)[0] + ".mp3"
-                return filename
+                return {
+                    'success': True,
+                    'file_path': filename,
+                    'title': info.get('title', 'audio')
+                }
             except Exception as e:
                 print(f"Erro no download: {e}")
-                return None
+                return {
+                    'success': False,
+                    'error': str(e)
+                }

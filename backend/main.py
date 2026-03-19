@@ -35,10 +35,13 @@ class DownloadRequest(BaseModel):
 
 @app.post("/api/info")
 async def get_info(req: InfoRequest):
-    info = dl.get_info(req.url)
-    if 'error' in info:
-        raise HTTPException(status_code=400, detail=info['error'])
-    return info
+    try:
+        info = dl.get_info(req.url)
+        if 'error' in info:
+            raise HTTPException(status_code=400, detail=info['error'])
+        return info
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro interno ao processar URL: {str(e)}")
 
 @app.post("/api/download")
 async def start_download(req: DownloadRequest):
