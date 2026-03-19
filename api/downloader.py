@@ -18,6 +18,7 @@ class Downloader:
             'no_warnings': True,
             'noplaylist': False,
             'cachedir': False,  # Desativa cache para evitar erros em sistemas somente-leitura
+            'extractor_args': {'youtube': {'player_client': ['ios']}},
         }
 
     def get_info(self, url):
@@ -34,7 +35,13 @@ class Downloader:
             if 'list' in params:
                 url = f"https://www.youtube.com/playlist?list={params['list'][0]}"
 
-        opts = {'quiet': True, 'noplaylist': False, 'extract_flat': True}
+        opts = {
+            'quiet': True, 
+            'noplaylist': False, 
+            'extract_flat': True,
+            'cachedir': False,
+            'extractor_args': {'youtube': {'player_client': ['ios']}},
+        }
         with yt_dlp.YoutubeDL(opts) as ydl:
             try:
                 info = ydl.extract_info(url, download=False)
