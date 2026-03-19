@@ -1,0 +1,8 @@
+downloads/
+backend/venv/
+backend/__pycache__/
+node/
+.git/
+.env
+.ipynb_checkpoints/
+*.pyc

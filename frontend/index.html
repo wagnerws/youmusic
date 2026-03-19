@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouMusic - Download Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css?v=5">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>YouMusic</h1>
+            <p>Baixe suas músicas favoritas com estilo.</p>
+        </header>
+
+        <!-- 
+        <div class="spotify-login">
+            <button class="secondary" id="spotify-btn">Conectar ao Spotify</button>
+        </div>
+        -->
+
+        <div class="search-box">
+            <input type="text" id="url-input" placeholder="Cole o link do YouTube, YT Music ou Spotify...">
+            <button id="search-btn">Analisar</button>
+        </div>
+
+        <div id="results" class="card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border);">
+                <h2 id="result-title" style="margin: 0; font-size: 1.2rem;">Título da Pasta</h2>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer; color: var(--primary);">
+                    <input type="checkbox" id="select-all-checkbox" checked> Selecionar Tudo
+                </label>
+            </div>
+            <div id="track-list"></div>
+            <button id="download-all-btn" style="margin-top: 1.5rem; width: 100%;">Baixar Selecionados</button>
+        </div>
+    </div>
+
+    <script src="/static/app.js?v=5"></script>
+</body>
+</html>
