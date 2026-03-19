@@ -1,3 +1,4 @@
 .vercel
 downloads/
 downloads/
+.env*.local
