@@ -11,12 +11,8 @@ class Downloader:
             os.makedirs(self.download_path)
         self.sp_manager = SpotifyManager()
         self.ydl_opts_base = {
-            'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }],
+            'format': 'bestaudio[ext=m4a]/bestaudio/best',
+            'postprocessors': [],
             'outtmpl': f'{self.download_path}/%(title)s.%(ext)s',
             'quiet': True,
             'no_warnings': True,
@@ -122,8 +118,15 @@ class Downloader:
                     info = info['entries'][0]
                 
                 filename = ydl.prepare_filename(info)
-                # O yt-dlp substitui a extensão por .mp3 no postprocessor
-                filename = os.path.splitext(filename)[0] + ".mp3"
+                # O yt-dlp pode mudar a extensão dependendo do formato baixado
+                # Como forçamos m4a, o prepare_filename deve ser confiável
+                if not os.path.exists(filename):
+                     # Fallback caso a extensão m4a não venha como esperado
+                     base, _ = os.path.splitext(filename)
+                     if os.path.exists(base + ".m4a"):
+                         filename = base + ".m4a"
+                     elif os.path.exists(base + ".webm"):
+                         filename = base + ".webm"
                 return {
                     'success': True,
                     'file_path': filename,

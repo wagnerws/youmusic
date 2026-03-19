@@ -56,10 +56,13 @@ async def start_download(req: DownloadRequest):
     
     # Retorna o arquivo e deleta depois (simplificado)
     # Em produção usaríamos um sistema de cache ou link temporário
+    ext = os.path.splitext(result['file_path'])[1].lower()
+    media_type = 'audio/mp4' if ext == '.m4a' else 'audio/webm' if ext == '.webm' else 'application/octet-stream'
+    
     return FileResponse(
         path=result['file_path'],
-        media_type='audio/mpeg',
-        filename=f"{result['title']}.mp3"
+        media_type=media_type,
+        filename=f"{result['title']}{ext}"
     )
 
 @app.get("/")
@@ -101,10 +104,13 @@ async def download_search(req: SearchDownloadRequest):
     if not result['success']:
         raise HTTPException(status_code=500, detail=result['error'])
     
+    ext = os.path.splitext(result['file_path'])[1].lower()
+    media_type = 'audio/mp4' if ext == '.m4a' else 'audio/webm' if ext == '.webm' else 'application/octet-stream'
+    
     return FileResponse(
         path=result['file_path'],
-        media_type='audio/mpeg',
-        filename=f"{result['title']}.mp3"
+        media_type=media_type,
+        filename=f"{result['title']}{ext}"
     )
 
 
