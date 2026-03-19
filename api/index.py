@@ -1,3 +1,9 @@
+import os
+import sys
+
+# Adicionar o diretório atual ao path para garantir importações no Vercel
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -5,7 +11,6 @@ from downloader import Downloader
 from spotify_manager import SpotifyManager
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
-import os
 
 app = FastAPI(title="YouMusic API")
 sp_manager = SpotifyManager()
